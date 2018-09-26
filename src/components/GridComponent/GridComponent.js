@@ -4,16 +4,26 @@ import GridSquare from '../GridSquare/GridSquare'
 export default class GridComponent extends Component {
   
   createGrid = () => {
+    const {
+      gridXDimension,
+      gridYDimension,
+      robotXPosition,
+      robotYPosition,
+      robotRotationDegree,
+    } = this.props
     let table = []
+    let squareClassName = "";
+
     // Outer loop to create parent
-    for (let i = 4; i >=0; i--) {
+    for (let i = gridYDimension-1; i >=0; i--) {
       let children = []
       //Inner loop to create children
-      for (let j = 0; j < 5; j++) {
+      for (let j = 0; j < gridXDimension; j++) {
         let isRobotPresent = false;
-        if(this.props.robotXPosition == j && this.props.robotYPosition == i) isRobotPresent=true;
+        if(robotXPosition == j && robotYPosition == i) isRobotPresent=true;
         else isRobotPresent=false;
-        children.push(<td><GridSquare rotationDegree = {this.props.robotRotationDegree} isRobotPresent={isRobotPresent}/></td>)
+        squareClassName = "class-"+i+"-y-"+j+"-x-square";
+        children.push(<td className={squareClassName}><GridSquare rotationDegree = {robotRotationDegree} isRobotPresent={isRobotPresent}/></td>)
       }
       //Create the parent and add the children
       table.push(<tr>{children}</tr>)
@@ -29,7 +39,7 @@ export default class GridComponent extends Component {
       robotYPosition,
       robotRotationDegree,
     } = this.props
-    
+
     return <div> 
         <table>
           <tbody>

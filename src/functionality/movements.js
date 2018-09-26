@@ -28,6 +28,9 @@ const functions = {
 
   // get commands and convert it into readable and executable form
   parseCommand: (command) => {
+    if(!command){
+      return [INVALID_COMMAND_STATEMENT];
+    }
     var lowerCaseCommand = command.toLowerCase();
     var commandArray = lowerCaseCommand.split(" ").filter(Boolean);
 
@@ -124,6 +127,9 @@ const functions = {
         case 'right':
         case 'aboutturn':
           {
+            if (currentPosition["x"]===null){
+              return {"error":"robot not placed"}
+            }
             currentPosition["direction"] = DIRECTION_DEGREE_RELATION[functions.rotateBot(getKeyByValue(DIRECTION_DEGREE_RELATION, currentPosition["direction"]), commandArray[0])];
             return currentPosition;
           }
@@ -131,6 +137,9 @@ const functions = {
           return functions.placeBot(commandArray);
         case 'move':
           {
+            if (currentPosition["x"]===null){
+              return {"error":"robot not placed"}
+            }
             var resultingArray = functions.moveNCommand(commandArray, getKeyByValue(DIRECTION_DEGREE_RELATION, currentPosition["direction"]));
             if (resultingArray[0] == "y") {
               currentPosition["y"] = currentPosition["y"] + parseInt(resultingArray[1]);
@@ -143,17 +152,17 @@ const functions = {
             }
             return currentPosition;
           }
-        case 'report':
+        case 'report':{
+          if (currentPosition["x"]===null){
+            return {"error":"robot not placed"}
+          }
           return currentPosition;
+        }    
       }
     }
   }
 
 };
-
-function executeMultipleCommands (arrayOfCommandStrings, currentPosition){
-  return true
-}
 
 function getKeyByValue(object, value) {
   return Object.keys(object).find(key => object[key] === value);

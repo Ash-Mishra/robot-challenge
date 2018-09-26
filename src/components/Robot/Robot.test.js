@@ -1,9 +1,6 @@
 import React from "react";
-import { mount , configure} from "enzyme";
+import { mount } from "enzyme";
 import Robot from './Robot'
-import Adapter from 'enzyme-adapter-react-16';
-
-configure({ adapter: new Adapter() });
 
 // Testing boilerplate
 describe("Robot", () =>{

@@ -1,6 +1,29 @@
 import React from "react";
-import { mount , configure} from "enzyme";
+import { mount } from "enzyme";
 import GridSquare from './GridSquare'
-import Adapter from 'enzyme-adapter-react-16';
 
-configure({ adapter: new Adapter() });
+describe("GridSquare testing",() => {
+  let props;
+  let mountedGridSquare;
+  const gridSquareComponent=()=>{
+    if(!mountedGridSquare){
+      mountedGridSquare = mount(
+        <GridSquare {...props}/>
+      );
+    }
+    return mountedGridSquare;
+  }
+
+  beforeEach(()=>{
+    props = {
+      rotationDegree: undefined,
+      isRobotPresent: undefined,
+    }
+    mountedGridSquare = undefined;
+  });
+
+  it("always renders a div", () => {
+    const divs = gridSquareComponent().find("div");
+    expect(divs.length).toBeGreaterThan(0);
+  });
+})
